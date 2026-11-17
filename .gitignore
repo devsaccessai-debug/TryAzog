@@ -21,3 +21,4 @@ referencevideo.mp4
 # Environment files
 .env
 .env.*
+dist-ssr
