@@ -35,15 +35,23 @@ export function BrandMark({
   )
 }
 
-/** Full TryAzog logo: mark + wordmark. `size` sets the overall height; `tone="white"` is for blue panels. */
+/** What the letters of "Azog" stand for, shown under the wordmark. */
+export const BRAND_TAGLINE = 'Agentic Zenith of Generation'
+
+/**
+ * Full TryAzog logo: mark + wordmark, with the tagline underneath unless `tagline={false}`.
+ * `size` sets the overall height; `tone="white"` is for blue panels.
+ */
 export function BrandLogo({
   size = 40,
   className,
   tone = 'color',
+  tagline = true,
 }: {
   size?: number
   className?: string
   tone?: 'color' | 'white'
+  tagline?: boolean
 }) {
   const white = tone === 'white'
   return (
@@ -56,12 +64,24 @@ export function BrandLogo({
       ) : (
         <BrandMark className="w-auto shrink-0" style={{ height: size * 0.82 }} />
       )}
-      <span
-        className="font-sans font-extrabold leading-none tracking-[-0.03em] whitespace-nowrap"
-        style={{ fontSize: size * 0.52 }}
-      >
-        <span className={white ? 'text-white' : 'text-[#050b2e]'}>Try</span>
-        <span className={white ? 'text-[#bfe3ff]' : 'text-[#0a66ff]'}>Azog</span>
+      <span className="flex flex-col" style={{ gap: size * 0.08 }}>
+        <span
+          className="font-sans font-extrabold leading-none tracking-[-0.03em] whitespace-nowrap"
+          style={{ fontSize: size * 0.52 }}
+        >
+          <span className={white ? 'text-white' : 'text-[#050b2e]'}>Try</span>
+          <span className={white ? 'text-[#bfe3ff]' : 'text-[#0a66ff]'}>Azog</span>
+        </span>
+        {tagline && (
+          <span
+            className={`font-sans font-semibold leading-none whitespace-nowrap ${
+              white ? 'text-white/70' : 'text-[#5a6b8a]'
+            }`}
+            style={{ fontSize: Math.max(10, size * 0.25) }}
+          >
+            {BRAND_TAGLINE}
+          </span>
+        )}
       </span>
     </span>
   )
