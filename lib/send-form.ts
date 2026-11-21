@@ -1,7 +1,7 @@
 // Form submissions are delivered by email through FormSubmit (https://formsubmit.co).
 // The first submission sends an activation email to this inbox — click "Activate" once
 // and all later submissions are delivered normally.
-export const CONTACT_EMAIL = 'vibeagenticai@gmail.com'
+export const CONTACT_EMAIL = 'tryazog@gmail.com'
 
 const ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`
 

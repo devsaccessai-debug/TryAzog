@@ -404,7 +404,7 @@ export function PrivacyPolicy() {
                   <div className="space-y-3 pt-2">
                     <h3 className="text-base font-bold text-foreground/90">8.3 How to Exercise Your Rights</h3>
                     <p>
-                      To exercise any of your rights, please email us at <a href="mailto:vibeagenticai@gmail.com" className="text-cyan-brand hover:underline font-semibold">vibeagenticai@gmail.com</a>. We will respond within 30 days.
+                      To exercise any of your rights, please email us at <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a>. We will respond within 30 days.
                     </p>
                   </div>
                 </section>
@@ -414,7 +414,7 @@ export function PrivacyPolicy() {
                 <section id="section-9" className="space-y-3 scroll-mt-28">
                   <h2 className="text-xl font-bold text-foreground tracking-tight">9. Children's Privacy</h2>
                   <p>
-                    Our Website and Services are not directed to individuals under the age of 13. We do not knowingly collect personal data from children. If you believe your child has provided us with personal information, please email us at <a href="mailto:vibeagenticai@gmail.com" className="text-cyan-brand hover:underline font-semibold">vibeagenticai@gmail.com</a> to have it deleted.
+                    Our Website and Services are not directed to individuals under the age of 13. We do not knowingly collect personal data from children. If you believe your child has provided us with personal information, please email us at <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a> to have it deleted.
                   </p>
                 </section>
 
@@ -444,7 +444,7 @@ export function PrivacyPolicy() {
                   <div className="grid gap-1 font-sans text-sm">
                     <p><strong>Company:</strong> TryAzog</p>
                     <p><strong>Website:</strong> <a href="https://www.tryazog.com" target="_blank" rel="noopener noreferrer" className="text-cyan-brand hover:underline font-semibold">https://www.tryazog.com</a></p>
-                    <p><strong>Email:</strong> <a href="mailto:vibeagenticai@gmail.com" className="text-cyan-brand hover:underline font-semibold">vibeagenticai@gmail.com</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a></p>
                   </div>
                 </section>
               </div>
