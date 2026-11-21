@@ -19,6 +19,14 @@ import {
 const inputBaseClass =
   'rounded-xl border bg-white px-4 py-3 text-sm text-foreground placeholder:text-foreground/40 transition-all duration-300 focus:bg-white focus:outline-none w-full'
 
+// Shared card sizing: scrolls inside itself, never taller than the viewport,
+// centered via m-auto when it fits and top-aligned when it doesn't.
+const cardBaseClass =
+  'relative m-auto w-full max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] overflow-y-auto overscroll-contain overflow-x-hidden rounded-2xl border border-foreground/10 bg-white p-5 shadow-[0_40px_90px_-30px_rgba(11,26,51,0.45)] sm:p-6 md:p-8'
+
+const closeBtnClass =
+  'absolute right-3 top-3 z-20 flex size-9 items-center justify-center rounded-full bg-primary/[0.05] text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground cursor-pointer sm:right-5 sm:top-5'
+
 export function ModalManager() {
   const {
     activeModal,
@@ -85,6 +93,19 @@ export function ModalManager() {
     })
     setErrors({ name: '', email: '', message: '', date: '' })
     setTouched({ name: false, email: false, message: false, date: false })
+  }, [activeModal])
+
+  // Lock background page scroll while a modal is open
+  useEffect(() => {
+    if (!activeModal) return
+    const prevBodyOverflow = document.body.style.overflow
+    const prevHtmlOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prevBodyOverflow
+      document.documentElement.style.overflow = prevHtmlOverflow
+    }
   }, [activeModal])
 
   if (!activeModal) return null
@@ -194,7 +215,8 @@ export function ModalManager() {
   return (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#0b1a33]/45 p-4 backdrop-blur-md sm:p-6"
+        data-lenis-prevent
+        className="fixed inset-0 z-50 flex overflow-y-auto overscroll-contain bg-[#0b1a33]/45 p-3 backdrop-blur-md sm:p-6"
         onClick={handleBackdropClick}
       >
         {/* START A PROJECT MODAL */}
@@ -204,22 +226,18 @@ export function ModalManager() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-foreground/10 bg-white p-6 shadow-[0_40px_90px_-30px_rgba(11,26,51,0.45)] md:p-8"
+            className={`${cardBaseClass} max-w-2xl`}
           >
-            <button
-              onClick={closeModal}
-              className="absolute right-5 top-5 flex size-9 items-center justify-center rounded-full bg-primary/[0.05] text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground cursor-pointer"
-              aria-label="Close modal"
-            >
+            <button onClick={closeModal} className={closeBtnClass} aria-label="Close modal">
               <X className="size-5" />
             </button>
 
             {submitted ? (
-              <div className="flex min-h-[320px] flex-col items-center justify-center gap-4 text-center">
+              <div className="flex min-h-[280px] flex-col items-center justify-center gap-4 text-center sm:min-h-[320px]">
                 <span className="flex size-14 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary">
                   <Check className="size-7" />
                 </span>
-                <h3 className="font-sans text-2xl font-extrabold text-foreground">
+                <h3 className="font-sans text-xl font-extrabold text-foreground sm:text-2xl">
                   Project Request Submitted
                 </h3>
                 <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
@@ -234,11 +252,11 @@ export function ModalManager() {
               </div>
             ) : (
               <div>
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6">
                   <span className="font-mono text-xs font-semibold uppercase tracking-wider text-primary">
                     Start a Project
                   </span>
-                  <h2 className="mt-1 font-sans text-2xl font-extrabold text-foreground md:text-3xl">
+                  <h2 className="mt-1 pr-10 font-sans text-xl font-extrabold text-foreground sm:text-2xl md:text-3xl">
                     Let's Build Your AI System
                   </h2>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -246,8 +264,8 @@ export function ModalManager() {
                   </p>
                 </div>
 
-                <form onSubmit={handleStartProjectSubmit} className="grid gap-4" noValidate>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                <form onSubmit={handleStartProjectSubmit} className="grid gap-3 sm:gap-4" noValidate>
+                  <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                     <div className="flex flex-col gap-1.5">
                       <label className="block font-sans text-xs font-bold text-foreground">
                         Your Name
@@ -307,7 +325,7 @@ export function ModalManager() {
                     </div>
                   </div>
 
-                  <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
                     <div className="flex flex-col gap-1.5">
                       <label className="block font-sans text-xs font-bold text-foreground">
                         Service Needed
@@ -399,7 +417,7 @@ export function ModalManager() {
                   <button
                     type="submit"
                     disabled={sending}
-                    className="disabled:opacity-70 disabled:cursor-wait mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-sm font-bold text-white transition-all hover:bg-[#0f57d8] hover:shadow-[0_14px_30px_-12px_rgba(22,103,242,0.7)] cursor-pointer"
+                    className="disabled:opacity-70 disabled:cursor-wait mt-1 flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-sm font-bold text-white transition-all hover:bg-[#0f57d8] hover:shadow-[0_14px_30px_-12px_rgba(22,103,242,0.7)] cursor-pointer sm:mt-2"
                   >
                     {sending ? <><Loader2 className="size-4 animate-spin" /> Sending...</> : 'Submit Project Details'}
                   </button>
@@ -416,22 +434,18 @@ export function ModalManager() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-foreground/10 bg-white p-6 shadow-[0_40px_90px_-30px_rgba(11,26,51,0.45)] md:p-8"
+            className={`${cardBaseClass} max-w-xl`}
           >
-            <button
-              onClick={closeModal}
-              className="absolute right-5 top-5 flex size-9 items-center justify-center rounded-full bg-primary/[0.05] text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground cursor-pointer"
-              aria-label="Close modal"
-            >
+            <button onClick={closeModal} className={closeBtnClass} aria-label="Close modal">
               <X className="size-5" />
             </button>
 
             {submitted ? (
-              <div className="flex min-h-[320px] flex-col items-center justify-center gap-4 text-center">
+              <div className="flex min-h-[280px] flex-col items-center justify-center gap-4 text-center sm:min-h-[320px]">
                 <span className="flex size-14 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary">
                   <Check className="size-7" />
                 </span>
-                <h3 className="font-sans text-2xl font-extrabold text-foreground">
+                <h3 className="font-sans text-xl font-extrabold text-foreground sm:text-2xl">
                   Call Request Received
                 </h3>
                 <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
@@ -439,7 +453,7 @@ export function ModalManager() {
                   <strong className="text-foreground">
                     {formatInZone(slotInstant(formData.date, selectedSlot), timeZone, true)}
                   </strong>
-                  . We will email you at <strong className="text-foreground">{formData.email.trim()}</strong> to
+                  . We will email you at <strong className="break-all text-foreground">{formData.email.trim()}</strong> to
                   confirm the time or suggest the nearest free slot.
                 </p>
                 <button
@@ -451,11 +465,11 @@ export function ModalManager() {
               </div>
             ) : (
               <div>
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6">
                   <span className="font-mono text-xs font-semibold uppercase tracking-wider text-primary">
                     Book a Strategy Call
                   </span>
-                  <h2 className="mt-1 font-sans text-2xl font-extrabold text-foreground md:text-3xl">
+                  <h2 className="mt-1 pr-10 font-sans text-xl font-extrabold text-foreground sm:text-2xl md:text-3xl">
                     Schedule a Consultation
                   </h2>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -463,8 +477,8 @@ export function ModalManager() {
                   </p>
                 </div>
 
-                <form onSubmit={handleStrategyCallSubmit} className="grid gap-4" noValidate>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                <form onSubmit={handleStrategyCallSubmit} className="grid gap-3 sm:gap-4" noValidate>
+                  <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                     <div className="flex flex-col gap-1.5">
                       <label className="block font-sans text-xs font-bold text-foreground">
                         Your Name
@@ -553,8 +567,8 @@ export function ModalManager() {
                     />
                   </div>
 
-                  <div className="grid gap-4 sm:grid-cols-[0.8fr_1.2fr]">
-                    <div className="flex flex-col gap-1.5">
+                  <div className="grid gap-3 sm:grid-cols-[0.8fr_1.2fr] sm:gap-4">
+                    <div className="flex min-w-0 flex-col gap-1.5">
                       <label className="block font-sans text-xs font-bold text-foreground">
                         Preferred Date
                       </label>
@@ -569,7 +583,7 @@ export function ModalManager() {
                           if (touched.date) setErrors((prev) => ({ ...prev, date: validateDate(val) }))
                         }}
                         onBlur={() => handleBlur('date')}
-                        className={`${inputBaseClass} bg-white text-foreground ${
+                        className={`${inputBaseClass} min-w-0 bg-white text-foreground ${
                           errors.date
                             ? 'border-red-500/80 focus:border-red-500'
                             : 'border-foreground/10 focus:border-primary/60'
@@ -583,14 +597,14 @@ export function ModalManager() {
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex min-w-0 flex-col gap-1.5">
                       <label className="block font-sans text-xs font-bold text-foreground">
                         Preferred Time Slot
                       </label>
                       <select
                         value={formData.time}
                         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        className={`${inputBaseClass} border-foreground/10 bg-white text-foreground focus:border-primary/60`}
+                        className={`${inputBaseClass} min-w-0 border-foreground/10 bg-white text-foreground focus:border-primary/60`}
                       >
                         {CALL_SLOTS.map((slot) => (
                           <option key={slotKey(slot)} value={slotKey(slot)} className="bg-white text-foreground">
@@ -625,7 +639,7 @@ export function ModalManager() {
                   <button
                     type="submit"
                     disabled={sending}
-                    className="disabled:opacity-70 disabled:cursor-wait mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-sm font-bold text-white transition-all hover:bg-[#0f57d8] hover:shadow-[0_14px_30px_-12px_rgba(22,103,242,0.7)] cursor-pointer"
+                    className="disabled:opacity-70 disabled:cursor-wait mt-1 flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-sm font-bold text-white transition-all hover:bg-[#0f57d8] hover:shadow-[0_14px_30px_-12px_rgba(22,103,242,0.7)] cursor-pointer sm:mt-2"
                   >
                     {sending ? <><Loader2 className="size-4 animate-spin" /> Sending...</> : <>Request This Call Slot <Calendar className="size-4" /></>}
                   </button>
@@ -642,24 +656,20 @@ export function ModalManager() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-foreground/10 bg-white p-6 shadow-[0_40px_90px_-30px_rgba(11,26,51,0.45)] md:p-8"
+            className={`${cardBaseClass} max-w-3xl`}
           >
-            <button
-              onClick={closeModal}
-              className="absolute right-5 top-5 flex size-9 items-center justify-center rounded-full bg-primary/[0.05] text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground cursor-pointer"
-              aria-label="Close modal"
-            >
+            <button onClick={closeModal} className={closeBtnClass} aria-label="Close modal">
               <X className="size-5" />
             </button>
 
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-primary">
                 Service Overview • {selectedService.num}
               </span>
-              <h2 className="mt-1 font-sans text-2xl font-extrabold text-foreground md:text-3xl">
+              <h2 className="mt-1 pr-10 font-sans text-xl font-extrabold text-foreground sm:text-2xl md:text-3xl">
                 {selectedService.title}
               </h2>
-              <p className="mt-2 text-base font-medium text-primary">
+              <p className="mt-2 text-sm font-medium text-primary sm:text-base">
                 {selectedService.hook}
               </p>
               <p className="mt-3 leading-relaxed text-muted-foreground text-sm md:text-base">
@@ -667,7 +677,7 @@ export function ModalManager() {
               </p>
             </div>
 
-            <div className="space-y-6 border-t border-foreground/10 pt-6">
+            <div className="space-y-5 border-t border-foreground/10 pt-5 sm:space-y-6 sm:pt-6">
               {/* Features */}
               <div>
                 <h4 className="font-sans text-xs font-bold text-foreground uppercase tracking-wider text-muted-foreground mb-3">
@@ -712,7 +722,7 @@ export function ModalManager() {
             </div>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end border-t border-foreground/10 pt-6">
+            <div className="mt-6 flex flex-col gap-3 border-t border-foreground/10 pt-5 sm:mt-8 sm:flex-row sm:items-center sm:justify-end sm:pt-6">
               <button
                 onClick={() => openStrategyCall()}
                 className="rounded-full border border-foreground/10 bg-primary/[0.05] px-6 py-3 text-xs font-bold text-foreground transition-colors hover:bg-primary/10 cursor-pointer"
@@ -736,28 +746,28 @@ export function ModalManager() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-foreground/10 bg-white p-6 shadow-[0_40px_90px_-30px_rgba(11,26,51,0.45)] md:p-8"
+            className={`${cardBaseClass} max-w-3xl`}
           >
             <button
               onClick={closeModal}
-              className="absolute right-5 top-5 z-20 flex size-9 items-center justify-center rounded-full bg-[#0b1a33]/30 text-muted-foreground backdrop-blur-md transition-colors hover:bg-[#0b1a33]/45 hover:text-foreground cursor-pointer"
+              className="absolute right-3 top-3 z-20 flex size-9 items-center justify-center rounded-full bg-[#0b1a33]/30 text-muted-foreground backdrop-blur-md transition-colors hover:bg-[#0b1a33]/45 hover:text-foreground cursor-pointer sm:right-5 sm:top-5"
               aria-label="Close modal"
             >
               <X className="size-5" />
             </button>
 
-            <div className="relative mb-6 h-48 w-full overflow-hidden rounded-xl border border-foreground/10">
+            <div className="relative mb-5 h-36 w-full overflow-hidden rounded-xl border border-foreground/10 sm:mb-6 sm:h-48">
               <img
                 src={selectedIndustry.image}
                 alt={selectedIndustry.alt}
                 className="h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-primary">
                   Industry Focus
                 </span>
-                <h2 className="font-sans text-3xl font-extrabold text-foreground">
+                <h2 className="font-sans text-2xl font-extrabold text-foreground sm:text-3xl">
                   {selectedIndustry.title}
                 </h2>
               </div>
@@ -767,7 +777,7 @@ export function ModalManager() {
               {selectedIndustry.overview}
             </p>
 
-            <div className="mt-6 space-y-6 border-t border-foreground/10 pt-6">
+            <div className="mt-5 space-y-5 border-t border-foreground/10 pt-5 sm:mt-6 sm:space-y-6 sm:pt-6">
               {/* Use Cases */}
               <div>
                 <h4 className="font-sans text-xs font-bold text-foreground uppercase tracking-wider text-muted-foreground mb-3">
@@ -804,7 +814,7 @@ export function ModalManager() {
             </div>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end border-t border-foreground/10 pt-6">
+            <div className="mt-6 flex flex-col gap-3 border-t border-foreground/10 pt-5 sm:mt-8 sm:flex-row sm:items-center sm:justify-end sm:pt-6">
               <button
                 onClick={() => openStrategyCall()}
                 className="rounded-full bg-primary px-7 py-3 text-xs font-extrabold text-white transition-all hover:bg-[#0f57d8] hover:shadow-[0_14px_30px_-12px_rgba(22,103,242,0.7)] cursor-pointer"
