@@ -201,7 +201,7 @@ export function TermsConditions() {
                     <li>Provide accurate, current, and complete registration information</li>
                     <li>Maintain and promptly update your account information to keep it accurate</li>
                     <li>Keep your password secure and confidential</li>
-                    <li>Notify us immediately at <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a> of any suspected unauthorised access</li>
+                    <li>Notify us immediately at <a href="mailto:info@tryazog.com" className="text-cyan-brand hover:underline font-semibold">info@tryazog.com</a> of any suspected unauthorised access</li>
                     <li>Accept full responsibility for all activities that occur under your account</li>
                   </ul>
                   <p>We reserve the right to suspend or terminate accounts that violate these Terms, contain false information, or have been inactive for an extended period, with or without prior notice.</p>
@@ -278,7 +278,7 @@ export function TermsConditions() {
 
                   <div className="space-y-3 pt-2">
                     <h3 className="text-base font-bold text-foreground/90">6.3 Refund and Cancellation Policy</h3>
-                    <p>Refund requests must be submitted within 14 days of the original purchase date and are evaluated on a case-by-case basis. Custom development work, completed consultation sessions, or delivered deliverables are non‑refundable. Contact <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a> to request a refund.</p>
+                    <p>Refund requests must be submitted within 14 days of the original purchase date and are evaluated on a case-by-case basis. Custom development work, completed consultation sessions, or delivered deliverables are non‑refundable. Contact <a href="mailto:info@tryazog.com" className="text-cyan-brand hover:underline font-semibold">info@tryazog.com</a> to request a refund.</p>
                   </div>
                 </section>
 
@@ -321,7 +321,7 @@ export function TermsConditions() {
                 <section id="section-11" className="space-y-3 scroll-mt-28">
                   <h2 className="text-xl font-bold text-foreground tracking-tight">11. Termination</h2>
                   <p>
-                    We reserve the right to suspend or terminate your access to the Website or Services at any time, for any reason (including violation of these Terms), with or without notice. You may delete your account by contacting <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a>.
+                    We reserve the right to suspend or terminate your access to the Website or Services at any time, for any reason (including violation of these Terms), with or without notice. You may delete your account by contacting <a href="mailto:info@tryazog.com" className="text-cyan-brand hover:underline font-semibold">info@tryazog.com</a>.
                   </p>
                 </section>
 
@@ -337,7 +337,7 @@ export function TermsConditions() {
 
                   <div className="space-y-3 pt-2">
                     <h3 className="text-base font-bold text-foreground/90">12.2 Dispute Resolution</h3>
-                    <p>In the event of a dispute, both parties agree to first attempt informal resolution by contacting <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a>. If unresolved after 30 days, we agree to pursue mediation before submitting to the exclusive jurisdiction of the state and federal courts located in Philadelphia, Pennsylvania.</p>
+                    <p>In the event of a dispute, both parties agree to first attempt informal resolution by contacting <a href="mailto:info@tryazog.com" className="text-cyan-brand hover:underline font-semibold">info@tryazog.com</a>. If unresolved after 30 days, we agree to pursue mediation before submitting to the exclusive jurisdiction of the state and federal courts located in Philadelphia, Pennsylvania.</p>
                   </div>
 
                   <div className="space-y-3 pt-2">
@@ -372,8 +372,8 @@ export function TermsConditions() {
                   <div className="grid gap-1 font-sans text-sm">
                     <p><strong>Company:</strong> TryAzog</p>
                     <p><strong>Website:</strong> <a href="https://www.tryazog.com" target="_blank" rel="noopener noreferrer" className="text-cyan-brand hover:underline font-semibold">https://www.tryazog.com</a></p>
-                    <p><strong>Legal Inquiries:</strong> <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a></p>
-                    <p><strong>Support:</strong> <a href="mailto:tryazog@gmail.com" className="text-cyan-brand hover:underline font-semibold">tryazog@gmail.com</a></p>
+                    <p><strong>Legal Inquiries:</strong> <a href="mailto:info@tryazog.com" className="text-cyan-brand hover:underline font-semibold">info@tryazog.com</a></p>
+                    <p><strong>Support:</strong> <a href="mailto:info@tryazog.com" className="text-cyan-brand hover:underline font-semibold">info@tryazog.com</a></p>
                   </div>
                 </section>
               </div>
